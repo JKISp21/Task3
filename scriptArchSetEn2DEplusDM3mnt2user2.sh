@@ -76,10 +76,10 @@ arch-chroot /mnt /bin/bash -c "passwd $username"
 
 
 #-------------echo 'Updating the OS------------------
-arch-chroot /mnt /bin/bash -c "pacman -Syu"
+arch-chroot /mnt /bin/bash -c "pacman -Syu --noconfirm"
 #-------------echo 'We put X and drivers------------------
 #gui_install="xorg-server xorg-drivers xorg-xinit"
-arch-chroot /mnt /bin/bash -c  "pacman -S xorg-server xorg-drivers xorg-xinit" #$gui_install
+arch-chroot /mnt /bin/bash -c  "pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm" #$gui_install
 ##------------echo "DE selection and install?"------------------
 
 read -p "1 - XFCE, 2 - Gnome 3 - Deepin: " vm_setting
@@ -88,28 +88,29 @@ read -p "1 - XFCE, 2 - Gnome 3 - Deepin: " vm_setting
 #------------------------------
 if [[ $vm_setting == 1 ]]; then
 # pacman -S xorg xorg-xinit mesa
-arch-chroot /mnt /bin/bash -c "pacman -S deepin deepin-extra"
+#arch-chroot /mnt /bin/bash -c "pacman -S --noconfirm deepin deepin-extra"
+arch-chroot /mnt /bin/bash -c "pacman -S xfce4 xfce4-goodies --noconfirm"
   # pacman -S xfce4 xfce4-goodies --noconfirm
 elif [[ $vm_setting == 2 ]]; then
 # pacman -S xorg xorg-xinit mesa
-arch-chroot /mnt /bin/bash -c "pacman -S gnome gnome-extra"
+arch-chroot /mnt /bin/bash -c "pacman -S gnome gnome-extra --noconfirm"
   #pacman -Sy plasma-meta kdebase --noconfirm
 elif [[ $vm_setting == 3 ]]; then
 # pacman -S xorg xorg-xinit mesa
 # pacman -S deepin deepin-extra	
-arch-chroot /mnt /bin/bash -c  "pacman -S deepin deepin-extra"  
+arch-chroot /mnt /bin/bash -c  "pacman -S deepin deepin-extra --noconfirm"  
 fi
 ###-----------echo "DM selection and install?"------------------
 read -p "1 - sddm, 2 - lxdm: " dm_setting
 if [[ $dm_setting == 1 ]]; then
 
-arch-chroot /mnt /bin/bash -c  "pacman -S sddm sddm-kcm"
+arch-chroot /mnt /bin/bash -c  "pacman -S sddm sddm-kcm --noconfirm"
 arch-chroot /mnt /bin/bash -c  "systemctl enable sddm"
 
   # pacman -Sy sddm sddm-kcm --noconfirm
   # systemctl enable sddm.service -f
 elif [[ $dm_setting == 2 ]]; then
-arch-chroot /mnt /bin/bash -c  "pacman -S lxdm --noconfirm"
+arch-chroot /mnt /bin/bash -c  "pacman -S lxdm --noconfirm --noconfirm"
 arch-chroot /mnt /bin/bash -c  "systemctl enable lxdm"
 fi
 ####-----------echo "Putting the fonts"------------------
